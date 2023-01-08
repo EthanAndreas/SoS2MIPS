@@ -552,6 +552,7 @@ void generate_asm(FILE *out) {
 
     case if_instr_op:
 
+      free_reg(quad->arg1->reg_arg);
       vec_pop(blocks);
       break;
 

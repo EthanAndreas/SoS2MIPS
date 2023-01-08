@@ -27,6 +27,13 @@ myfunc(){
   else  
     echo "False\n"
   fi;
+  var4 = 0;
+  if test ${var4} eq 1
+  then
+    echo "True\n"
+  else  
+    echo "False\n"
+  fi;
   declare tab2[10];
   echo "\nTest read :\n";
   echo "Choisir un indice : ";
