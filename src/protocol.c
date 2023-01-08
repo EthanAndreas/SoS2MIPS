@@ -580,8 +580,7 @@ void generate_asm(FILE *out) {
         ops_count++;
       }
 
-      if (quad->arg1 != ALL_ARG)
-        free_reg(quad->arg1->reg_arg);
+      if (quad->arg1 != ALL_ARG) free_reg(quad->arg1->reg_arg);
 
       break;
 
@@ -886,6 +885,7 @@ void generate_asm(FILE *out) {
           // free the registers
           free_reg(reg1);
           free_reg(reg2);
+          free_reg(reg3);
         }
       }
 
@@ -1120,12 +1120,6 @@ void generate_asm(FILE *out) {
                                                   vec_size(quad->subarray) - 1))
                            ->value.id_value->name);
 
-      // store the result in the return register
-      quad->arg3 = quadarg_new_reg();
-      quad->arg3->reg_arg = find_free_reg();
-      astack_push_text(stack, asblock, "move %s, $v1",
-                       reg_name(quad->arg3->reg_arg));
-
       // set the flag to false to know that we are not in a function
       astack_push_text(stack, asblock, "li $t9, 0");
 
@@ -1145,12 +1139,6 @@ void generate_asm(FILE *out) {
       // jump to the function code
       astack_push_text(stack, asblock, "jal %s",
                        quad->arg1->value.id_value->name);
-
-      // store the result in the return register
-      quad->arg3 = quadarg_new_reg();
-      quad->arg3->reg_arg = find_free_reg();
-      astack_push_text(stack, asblock, "move %s, $v1",
-                       reg_name(quad->arg3->reg_arg));
 
       // set the flag to false to know that we are not in a function
       astack_push_text(stack, asblock, "li $t9, 0");
